@@ -64,6 +64,7 @@
       gap: 6px;
     }
     h1 { margin: 0; font-size: 1.9rem; color: var(--accent-2); font-family: 'Bebas Neue', system-ui, sans-serif; letter-spacing: 1px; text-transform: uppercase; }
+  h1 a { color: inherit; text-decoration: none; }
     .subtitle { font-family: 'Montserrat', system-ui, sans-serif; font-weight:600; color: rgba(32, 82, 183, 0.85); }
     .event-badge {
       display:inline-block;
@@ -332,12 +333,12 @@
     // Descripciones por tipo de sesión (coincidir con títulos usados)
     const sessionDescriptions = {
       'Descanso activo': 'Recuperación activa: 45–60 min caminata o rodillo suave. Enfócate en movilidad y estiramientos.',
-      'Rodillo/Carretera Z2 60–120 min': 'Entrenamiento aeróbico en zona 2. Mantén conversación y cadencia 85–95 rpm. Base de resistencia.',
+      'Rodillo/Carretera Z2': 'Entrenamiento aeróbico en zona 2. Mantén conversación y cadencia 85–95 rpm. Base de resistencia. (Duración típica 60–120 min)',
       'Gimnasio fuerza 45–60 min': 'Sesión en gimnasio: sentadillas, peso muerto, zancadas y trabajo de core. Técnica primero, carga controlada.',
-      'Intervalos cortos 45–60 min': 'Intensidad controlada: series cortas para mejorar VO2 y tolerancia. Ejemplos 6–8×3min en Z4 con recuperaciones.',
+      'Intervalos cortos': 'Intensidad controlada: series cortas para mejorar VO2 y tolerancia. Ejemplos 6–8×3min en Z4 con recuperaciones. (Sesión total ~45–60 min)',
       'Cinta/Remo 30–45 min': 'Sesión cruzada para mantener volumen sin impacto en articulaciones. Ritmo suave, técnica correcta.',
-      'MTB técnica 2–3 h': 'Enfócate en técnica: curvas, tracción, control de ritmo y subidas. Practica la cadencia en subida.',
-      'Fondo largo 2–4 h': 'Salida larga en Z2: prueba la nutrición, toma 60–90 g/h de hidratos y 500–750 ml/h de líquido.'
+      'MTB técnica': 'Enfócate en técnica: curvas, tracción, control de ritmo y subidas. Practica la cadencia en subida. (Bloques típicos 2–3 h)',
+      'Fondo largo': 'Salida larga en Z2: prueba la nutrición, toma 60–90 g/h de hidratos y 500–750 ml/h de líquido. (Duración 2–4 h según objetivo)'
     };
 
     // Detalles ricos (tablas u otros) para sesiones específicas
@@ -364,7 +365,7 @@
         {name:'Específica', weeks:6},
         {name:'Puesta a punto', weeks:2}
       ];
-      const sessions = ['Descanso activo','Rodillo/Carretera Z2 60–120 min','Gimnasio fuerza 45–60 min','Intervalos cortos 45–60 min','Cinta/Remo 30–45 min','MTB técnica 2–3 h','Fondo largo 2–4 h'];
+  const sessions = ['Descanso activo','Rodillo/Carretera Z2','Gimnasio fuerza 45–60 min','Intervalos cortos','Cinta/Remo 30–45 min','MTB técnica','Fondo largo'];
       const weeks = [];
       let w = 1;
       for(const p of phases){
@@ -381,6 +382,30 @@
     function loadState(){const raw=localStorage.getItem(STORAGE_KEY);return raw?JSON.parse(raw):null;}
 
     const state = loadState() || {plan:defaultPlan,weights:[]};
+
+    // --- Migración de títulos antiguos guardados en localStorage ---
+    // Algunos usuarios pueden tener guardado un plan con títulos que incluían duraciones.
+    // Mapear esos títulos antiguos a los nuevos (sin tiempos) para que el UI refleje el cambio.
+    const titleMap = {
+      'Rodillo/Carretera Z2 60–120 min': 'Rodillo/Carretera Z2',
+      'Intervalos cortos 45–60 min': 'Intervalos cortos',
+      'MTB técnica 2–3 h': 'MTB técnica',
+      'Fondo largo 2–4 h': 'Fondo largo'
+    };
+
+    function migrateTitlesInState(st){
+      let changed = false;
+      if(!st || !st.plan) return;
+      st.plan.forEach(w => {
+        if(!w.sessions) return;
+        w.sessions.forEach(s => {
+          if(titleMap[s.title]){ s.title = titleMap[s.title]; changed = true; }
+        });
+      });
+      if(changed) saveState(st);
+    }
+
+    migrateTitlesInState(state);
 
     const weeksContainer = document.getElementById('weeksContainer');
     function renderWeeks(){
