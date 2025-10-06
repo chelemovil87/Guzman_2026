@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Plan 24 semanas - MTB Guzmán el Bueno 2026</title>
+  <!-- Preload del póster para mejorar tiempo de render del fondo -->
+  <link rel="preload" as="image" href="https://rtsfiles.blob.core.windows.net/manager/10961/library/root/d469756c-f28c-4769-886f-40abab03aadf.png">
+  <!-- Fuentes para darle estilo cartelero: Bebas Neue para títulos y Montserrat para cuerpo -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --accent: #2b8f4a; /* verde principal */
+      --accent-2: #c89b3a; /* dorado secundario */
+      --text: #0f172a;
+      --muted: #d1d1d6;
+      --border: #e2e8f0;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica Neue, Arial;
+      /* Fondo temático: imagen del cartel con degradado oscuro para legibilidad */
+      background-color: #081019; /* fallback */
+      background-image: linear-gradient(rgba(6,10,12,0.62), rgba(14,16,18,0.62)), url('https://rtsfiles.blob.core.windows.net/manager/10961/library/root/d469756c-f28c-4769-886f-40abab03aadf.png');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      color: var(--text);
+    }
+
+    /* Mejorar rendimiento y experiencia en pantallas pequeñas */
+    @media (max-width: 800px) {
+      html, body {
+        background-attachment: scroll; /* evita lecturas costosas en móviles */
+      }
+      .wrap { margin: 12px auto; }
+    }
+    .wrap {
+      max-width: 1100px;
+      margin: 24px auto;
+      padding: 20px;
+      background: rgba(255,255,255,0.12);
+      -webkit-backdrop-filter: saturate(140%) blur(10px);
+      backdrop-filter: saturate(140%) blur(10px);
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(2,6,23,0.45);
+      border: 1px solid rgba(255,255,255,0.08);
+      background-image: linear-gradient(rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+    }
+    header { display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+    .header-main {
+      flex: 1 1 auto; 
+      display: flex;
+      flex-direction: column;
+      align-items: center; 
+      justify-content: center; 
+      text-align: center;
+      gap: 6px;
+    }
+    h1 { margin: 0; font-size: 1.9rem; color: var(--accent-2); font-family: 'Bebas Neue', system-ui, sans-serif; letter-spacing: 1px; text-transform: uppercase; }
+    .subtitle { font-family: 'Montserrat', system-ui, sans-serif; font-weight:600; color: rgba(32, 82, 183, 0.85); }
+    .event-badge {
+      display:inline-block;
+      background: linear-gradient(90deg, rgba(0,0,0,0.55), rgba(0,0,0,0.25));
+      color: #fcfcfc;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-weight:700;
+      letter-spacing: 1px;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.35);
+      font-family: 'Bebas Neue', system-ui, sans-serif;
+    }
+    .controls { display: flex; gap: 8px; align-items: center; }
+    button {
+      background: var(--accent);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    button:hover { opacity: 0.9; }
+  .muted { color: var(--muted); font-size: 0.95rem; }
+    .grid { display: grid; grid-template-columns: 1fr 360px; gap: 18px; margin-top: 18px; }
+  .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0.06));
+      -webkit-backdrop-filter: blur(6px) saturate(120%);
+      backdrop-filter: blur(6px) saturate(120%);
+      border: 1px solid rgba(255,255,255,0.10);
+      padding: 16px;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(6,10,14,0.12);
+      color: rgba(8,12,20,0.95);
+    }
+
+    /* Estados de la semana según sesiones completadas */
+    .card.week-good {
+      background: linear-gradient(90deg, rgba(43,143,74,0.30), rgba(43,143,74,0.06));
+      border: 1px solid rgba(43,143,74,0.22);
+      color: rgba(6,8,10,0.98);
+    }
+    .card.week-moderate {
+      background: linear-gradient(90deg, rgba(200,155,58,0.38), rgba(200,155,58,0.05));
+      border: 1px solid rgba(200,155,58,0.22);
+      color: rgba(6,8,10,0.98);
+    }
+    .card.week-poor {
+      background: linear-gradient(90deg, rgba(220,60,60,0.25), rgba(220,60,60,0.06));
+      border: 1px solid rgba(220,60,60,0.22);
+      color: rgba(6,8,10,0.98);
+    }
+    .card.week-good .week-title strong,
+    .card.week-moderate .week-title strong,
+    .card.week-poor .week-title strong { color: rgba(4,6,8,0.98); }
+
+    .event-banner {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:12px 16px;
+      margin:14px 0 6px 0;
+      border-radius:10px;
+      background: linear-gradient(90deg, rgba(40,40,40,0.12), rgba(255,255,255,0.02));
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .event-banner .date { font-family:'Bebas Neue', sans-serif; font-size:1.6rem; color:var(--accent-2); }
+    .event-banner .loc { font-family:'Montserrat', sans-serif; font-weight:600; color:rgba(8,12,20,0.85); }
+
+    header, .card h2, .card h3, .card h4 { color: rgba(6,10,18,0.95); }
+    button {
+      background: var(--accent);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 4px 10px rgba(14,20,30,0.12);
+      backdrop-filter: none;
+    }
+    .week-title { display: flex; justify-content: space-between; align-items: center; }
+    .small { font-size: 0.9rem; color: var(--muted); }
+    .sessions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+    .session {
+      padding: 6px 10px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 10px;
+      font-size: 0.9rem;
+      border: 1px solid rgba(15,23,42,0.06);
+      cursor: pointer;
+      color: rgba(6,10,18,0.95);
+      transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .session:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(2,6,23,0.12); }
+
+    /* Estado completado - glassy strike + check badge */
+    .session.done {
+      background: linear-gradient(90deg, rgba(44, 207, 95, 0.14), rgba(200,155,58,0.06));
+      color: rgba(8,12,18,0.9);
+      text-decoration-line: line-through;
+      text-decoration-thickness: 3px;
+      text-decoration-color: rgba(8,12,18,0.45);
+      text-decoration-skip-ink: none;
+      border: 1px solid rgba(43,143,74,0.18);
+      box-shadow: inset 0 -2px 0 rgba(0,0,0,0.02);
+      opacity: 0.98;
+      pointer-events: auto;
+    }
+    .session.done::after {
+      content: '✓';
+      position: absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--accent);
+      color: white;
+      font-size: 0.72rem;
+      width: 20px;
+      height: 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      box-shadow: 0 3px 8px rgba(2,6,23,0.18);
+    }
+    input, select {
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: white;
+      color: var(--text);
+      width: 100%;
+    }
+    .note { font-size: 0.9rem; color: var(--muted); margin-top: 10px; }
+    footer { margin-top: 18px; color: var(--muted); font-size: 0.85rem; }
+    @media(max-width:900px){ .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header >
+      <div class="header-main">
+        <div><a class="event-badge" href="https://www.rockthesport.com/es/evento/-xxi-mtb-guzman-el-bueno-2026">21 MARZO 2026 — CÓRDOBA</a></div>
+        <h1><a href="https://www.mtbguzmanelbueno.com/">Guzmán el Bueno — Plan 24 semanas</a></h1>
+        <div class="subtitle muted">Llega preparado para el maratón MTB — plan progresivo, control de peso y exportación</div>
+      </div>
+      <div class="controls">
+        <button id="resetPlan">Reiniciar plan</button>
+        <button id="exportJSON">Exportar JSON</button>
+        <button id="importJSON">Importar JSON</button>
+        <button id="printPDF">Imprimir / Guardar PDF</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <main class="card" id="mainCard">
+        <div class="event-banner">
+          <div>
+            <div class="date">21 MARZO</div>
+            <div class="loc">Córdoba — Maratón MTB Guzmán el Bueno</div>
+          </div>
+          <div class="muted">XXI edición — ¡Prepárate con este plan de 24 semanas!</div>
+        </div>
+        <h2 class="small">Plan semanal (marca las sesiones completadas)</h2>
+        <div id="weeksContainer"></div>
+      </main>
+
+      <aside class="card">
+        <h3 class="small">Control de peso y progreso</h3>
+        <label>Nueva entrada de peso (kg)</label>
+        <input id="weightInput" type="number" step="0.1" placeholder="p. ej. 137.4" />
+        <button id="addWeight">Añadir peso</button>
+        <p class="note">Pésate siempre a la misma hora y con la misma ropa para consistencia.</p>
+        <h4 class="small">Registro</h4>
+        <ul id="weightList" style="max-height:160px;overflow:auto;padding-left:16px;margin:0"></ul>
+        <h4 class="small">Datos rápidos</h4>
+        <div class="muted">Peso inicial: <span id="startWeight">—</span> kg</div>
+        <div class="muted">Último peso: <span id="lastWeight">—</span> kg</div>
+      </aside>
+    </div>
+
+    <footer>
+      <div class="muted">Marca las sesiones completadas, añade pesos semanales y usa “Imprimir” para generar un PDF del plan y tu registro. Los datos se guardan en tu navegador (localStorage).</div>
+    </footer>
+  </div>
+
+  <script>
+    const defaultPlan = (() => {
+      const phases = [
+        {name:'Adaptación', weeks:4},
+        {name:'Base', weeks:6},
+        {name:'Fuerza/MTB', weeks:6},
+        {name:'Específica', weeks:6},
+        {name:'Puesta a punto', weeks:2}
+      ];
+      const sessions = ['Descanso activo','Rodillo/Carretera Z2 60–120 min','Gimnasio fuerza 45–60 min','Intervalos cortos 45–60 min','Cinta/Remo 30–45 min','MTB técnica 2–3 h','Fondo largo 2–4 h'];
+      const weeks = [];
+      let w = 1;
+      for(const p of phases){
+        for(let i=0;i<p.weeks;i++){
+          weeks.push({ id:w, phase:p.name, sessions:sessions.map((s,idx)=>({id:`w${w}s${idx+1}`,title:s,done:false})) });
+          w++;
+        }
+      }
+      return weeks;
+    })();
+
+    const STORAGE_KEY = 'mtb_guzman_plan_light';
+    function saveState(state){localStorage.setItem(STORAGE_KEY,JSON.stringify(state));}
+    function loadState(){const raw=localStorage.getItem(STORAGE_KEY);return raw?JSON.parse(raw):null;}
+
+    const state = loadState() || {plan:defaultPlan,weights:[]};
+
+    const weeksContainer = document.getElementById('weeksContainer');
+    function renderWeeks(){
+      weeksContainer.innerHTML='';
+      state.plan.forEach(week=>{
+        const div=document.createElement('div');
+        div.className='card';
+        div.style.marginBottom='12px';
+        const doneCount = week.sessions.filter(s=>s.done).length;
+  // asignar clase de estado según el número de sesiones completadas
+  // 6 o más sesiones -> buen (verde), 3-5 -> moderado (amarillo), 0-2 -> pobre (rojo)
+  if(doneCount>=6) div.classList.add('week-good');
+        else if(doneCount>=3 && doneCount<=5) div.classList.add('week-moderate');
+        else if(doneCount<=2) div.classList.add('week-poor');
+        div.innerHTML=`<div class='week-title'><div><strong>Semana ${week.id}</strong> <span class='small'>(${week.phase})</span></div><div class='small'>${doneCount}/${week.sessions.length} sesiones</div></div><div class='sessions' id='w${week.id}'></div>`;
+        weeksContainer.appendChild(div);
+        const sessionsDiv=div.querySelector(`#w${week.id}`);
+        week.sessions.forEach(s=>{
+          const btn=document.createElement('button');
+          btn.className='session';
+          btn.textContent=s.title;
+          if(s.done) btn.classList.add('done');
+          btn.addEventListener('click',()=>{s.done=!s.done;saveState(state);renderWeeks();});
+          sessionsDiv.appendChild(btn);
+        });
+      });
+    }
+
+    const weightInput=document.getElementById('weightInput');
+    const addWeightBtn=document.getElementById('addWeight');
+    const weightList=document.getElementById('weightList');
+    const startWeightSpan=document.getElementById('startWeight');
+    const lastWeightSpan=document.getElementById('lastWeight');
+
+    function renderWeights(){
+      weightList.innerHTML='';
+      state.weights.sort((a,b)=>new Date(a.date)-new Date(b.date));
+      state.weights.forEach(w=>{
+        const li=document.createElement('li');
+        li.textContent=`${new Date(w.date).toLocaleDateString()} — ${w.weight.toFixed(1)} kg`;
+        weightList.appendChild(li);
+      });
+      startWeightSpan.textContent=state.weights.length?state.weights[0].weight.toFixed(1):'—';
+      lastWeightSpan.textContent=state.weights.length?state.weights[state.weights.length-1].weight.toFixed(1):'—';
+    }
+
+    addWeightBtn.addEventListener('click',()=>{
+      const v=parseFloat(weightInput.value);
+      if(!v||v<=40){alert('Introduce un peso válido.');return;}
+      state.weights.push({date:new Date().toISOString(),weight:v});
+      saveState(state);
+      weightInput.value='';
+      renderWeights();
+    });
+
+    document.getElementById('resetPlan').addEventListener('click',()=>{
+      if(confirm('¿Reiniciar todo el plan y registros?')){
+        localStorage.removeItem(STORAGE_KEY);location.reload();
+      }
+    });
+
+    document.getElementById('exportJSON').addEventListener('click',()=>{
+      const blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+      const url=URL.createObjectURL(blob);
+      const a=document.createElement('a');a.href=url;a.download='mtb_guzman_plan.json';a.click();URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('importJSON').addEventListener('click',async()=>{
+      const file=await new Promise(r=>{const i=document.createElement('input');i.type='file';i.accept='application/json';i.onchange=()=>r(i.files[0]);i.click();});
+      if(!file)return;
+      const text=await file.text();
+      try{const obj=JSON.parse(text);state.plan=obj.plan||state.plan;state.weights=obj.weights||state.weights;saveState(state);renderWeeks();renderWeights();alert('Importado con éxito');}catch(e){alert('JSON inválido');}
+    });
+
+    document.getElementById('printPDF').addEventListener('click',()=>window.print());
+
+    renderWeeks();renderWeights();saveState(state);
+  </script>
+</body>
+</html>
