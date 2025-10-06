@@ -206,6 +206,17 @@
     .note { font-size: 0.9rem; color: var(--muted); margin-top: 10px; }
     footer { margin-top: 18px; color: var(--muted); font-size: 0.85rem; }
     @media(max-width:900px){ .grid { grid-template-columns: 1fr; } }
+  /* Modal styles: centrado y texto blanco */
+  #sessionModal { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:1200; }
+  #sessionModal[aria-hidden="true"] { display:none; }
+  .modal-overlay { position:absolute; inset:0; background:rgba(2,6,12,0.6); backdrop-filter: blur(2px); }
+  .modal-card { position:relative; width:min(720px,94%); max-height:86vh; overflow:auto; padding:18px; border-radius:12px; z-index:1201; background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.10)); border:1px solid rgba(255,255,255,0.12); box-shadow:0 20px 60px rgba(2,6,12,0.6); color: #ffffff; }
+  .modal-card h3, .modal-card #modalBody { color: #ffffff !important; }
+  .modal-card h3 { text-align:center; }
+  .modal-close { position:absolute; right:10px; top:10px; background:transparent; border:none; color:rgba(255,255,255,0.9); font-size:1.1rem; cursor:pointer; }
+  .session-action { background:var(--accent); color:white; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; }
+  .modal-close-secondary { color:#ffffff !important; border-color: rgba(255,255,255,0.06) !important; }
+  @media(max-width:600px){ .modal-card{ padding:12px; } .modal-close{ right:6px; top:6px; } }
   </style>
 </head>
 <body>
@@ -256,7 +267,32 @@
     </footer>
   </div>
 
+  <!-- Modal para información de sesión -->
+  <div id="sessionModal" aria-hidden="true">
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" aria-label="Cerrar">✕</button>
+        <h3 id="modalTitle"></h3>
+        <div id="modalBody"></div>
+        <div style="display:flex;gap:8px;margin-top:14px;justify-content:flex-end;">
+          <button id="modalToggleDone" class="session-action">Marcar como hecho</button>
+          <button id="modalClose2" class="session-action modal-close-secondary">Cerrar</button>
+        </div>
+    </div>
+  </div>
+
   <script>
+    // Descripciones por tipo de sesión (coincidir con títulos usados)
+    const sessionDescriptions = {
+      'Descanso activo': 'Recuperación activa: 45–60 min caminata o rodillo suave. Enfócate en movilidad y estiramientos.',
+      'Rodillo/Carretera Z2 60–120 min': 'Entrenamiento aeróbico en zona 2. Mantén conversación y cadencia 85–95 rpm. Base de resistencia.',
+      'Gimnasio fuerza 45–60 min': 'Sesión en gimnasio: sentadillas, peso muerto, zancadas y trabajo de core. Técnica primero, carga controlada.',
+      'Intervalos cortos 45–60 min': 'Intensidad controlada: series cortas para mejorar VO2 y tolerancia. Ejemplos 6–8×3min en Z4 con recuperaciones.',
+      'Cinta/Remo 30–45 min': 'Sesión cruzada para mantener volumen sin impacto en articulaciones. Ritmo suave, técnica correcta.',
+      'MTB técnica 2–3 h': 'Enfócate en técnica: curvas, tracción, control de ritmo y subidas. Practica la cadencia en subida.',
+      'Fondo largo 2–4 h': 'Salida larga en Z2: prueba la nutrición, toma 60–90 g/h de hidratos y 500–750 ml/h de líquido.'
+    };
+
     const defaultPlan = (() => {
       const phases = [
         {name:'Adaptación', weeks:4},
@@ -291,8 +327,7 @@
         div.className='card';
         div.style.marginBottom='12px';
         const doneCount = week.sessions.filter(s=>s.done).length;
-  // asignar clase de estado según el número de sesiones completadas
-  // 6 o más sesiones -> buen (verde), 3-5 -> moderado (amarillo), 0-2 -> pobre (rojo)
+  
   if(doneCount>=6) div.classList.add('week-good');
         else if(doneCount>=3 && doneCount<=5) div.classList.add('week-moderate');
         else if(doneCount<=2) div.classList.add('week-poor');
@@ -304,11 +339,47 @@
           btn.className='session';
           btn.textContent=s.title;
           if(s.done) btn.classList.add('done');
-          btn.addEventListener('click',()=>{s.done=!s.done;saveState(state);renderWeeks();});
+          btn.addEventListener('click',()=>{ openSessionModal(week, s, btn); });
           sessionsDiv.appendChild(btn);
         });
       });
     }
+
+    const modal = document.getElementById('sessionModal');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalClose = document.getElementById('modalClose');
+    const modalClose2 = document.getElementById('modalClose2');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+    const modalToggleDone = document.getElementById('modalToggleDone');
+    let currentSessionRef = null;
+
+    function openSessionModal(week, sessionObj, btnEl){
+      currentSessionRef = { week, sessionObj, btnEl };
+      modalTitle.textContent = sessionObj.title;
+      modalBody.textContent = sessionDescriptions[sessionObj.title] || 'Descripción disponible.';
+      modalToggleDone.textContent = sessionObj.done ? 'Desmarcar' : 'Marcar como hecho';
+      modal.setAttribute('aria-hidden','false');
+      setTimeout(()=>modalToggleDone.focus(), 100);
+    }
+
+    function closeModal(){
+      modal.setAttribute('aria-hidden','true');
+      currentSessionRef = null;
+    }
+
+    modalOverlay.addEventListener('click', closeModal);
+    modalClose.addEventListener('click', closeModal);
+    modalClose2.addEventListener('click', closeModal);
+
+    modalToggleDone.addEventListener('click', ()=>{
+      if(!currentSessionRef) return;
+      const {week, sessionObj} = currentSessionRef;
+      sessionObj.done = !sessionObj.done;
+      saveState(state);
+      renderWeeks();
+      closeModal();
+    });
 
     const weightInput=document.getElementById('weightInput');
     const addWeightBtn=document.getElementById('addWeight');
