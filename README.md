@@ -68,7 +68,7 @@ Cada semana incluye **7 sesiones planificadas** entre ciclismo, fuerza, técnica
 
 
  mtb-guzman-2026/
-├── plan-mtb-guzman.html # Aplicación interactiva del plan
+├── index.html # Aplicación interactiva del plan
 └── README.md # Este archivo de documentación
 
 
