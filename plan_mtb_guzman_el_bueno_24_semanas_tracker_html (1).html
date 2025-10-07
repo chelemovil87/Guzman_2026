@@ -4,9 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Plan 24 semanas - MTB Guzmán el Bueno 2026</title>
-  <!-- Preload del póster para mejorar tiempo de render del fondo -->
   <link rel="preload" as="image" href="https://rtsfiles.blob.core.windows.net/manager/10961/library/root/d469756c-f28c-4769-886f-40abab03aadf.png">
-  <!-- Fuentes para darle estilo cartelero: Bebas Neue para títulos y Montserrat para cuerpo -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
@@ -14,8 +12,8 @@
     :root {
       --bg: #f8fafc;
       --card: #ffffff;
-      --accent: #2b8f4a; /* verde principal */
-      --accent-2: #c89b3a; /* dorado secundario */
+      --accent: #2b8f4a; 
+      --accent-2: #c89b3a; 
       --text: #0f172a;
       --muted: #d1d1d6;
       --border: #e2e8f0;
@@ -24,8 +22,7 @@
       height: 100%;
       margin: 0;
       font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica Neue, Arial;
-      /* Fondo temático: imagen del cartel con degradado oscuro para legibilidad */
-      background-color: #081019; /* fallback */
+      background-color: #081019; 
       background-image: linear-gradient(rgba(6,10,12,0.62), rgba(14,16,18,0.62)), url('https://rtsfiles.blob.core.windows.net/manager/10961/library/root/d469756c-f28c-4769-886f-40abab03aadf.png');
       background-size: cover;
       background-position: center center;
@@ -34,10 +31,9 @@
       color: var(--text);
     }
 
-    /* Mejorar rendimiento y experiencia en pantallas pequeñas */
     @media (max-width: 800px) {
       html, body {
-        background-attachment: scroll; /* evita lecturas costosas en móviles */
+        background-attachment: scroll; 
       }
       .wrap { margin: 12px auto; }
     }
@@ -78,6 +74,9 @@
       font-family: 'Bebas Neue', system-ui, sans-serif;
     }
     .controls { display: flex; gap: 8px; align-items: center; }
+  .github-link { display:inline-flex; align-items:center; justify-content:center; padding:6px; border-radius:8px; background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.04); }
+  .github-link svg { width:32px; height:32px; color: #ffffff; display:block; }
+  .github-link:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(2,6,23,0.12); }
     button {
       background: var(--accent);
       border: none;
@@ -101,7 +100,6 @@
       color: rgba(8,12,20,0.95);
     }
 
-    /* Estados de la semana según sesiones completadas */
     .card.week-good {
       background: linear-gradient(90deg, rgba(43,143,74,0.30), rgba(43,143,74,0.06));
       border: 1px solid rgba(43,143,74,0.22);
@@ -166,7 +164,6 @@
     }
     .session:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(2,6,23,0.12); }
 
-    /* Estado completado - glassy strike + check badge */
     .session.done {
       background: linear-gradient(90deg, rgba(44, 207, 95, 0.14), rgba(200,155,58,0.06));
       color: rgba(8,12,18,0.9);
@@ -207,17 +204,14 @@
     .note { font-size: 0.9rem; color: var(--muted); margin-top: 10px; }
     footer { margin-top: 18px; color: var(--muted); font-size: 0.85rem; }
     @media(max-width:900px){ .grid { grid-template-columns: 1fr; } }
-  /* Modal styles: centrado y texto blanco */
   #sessionModal { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:1200; }
   #sessionModal[aria-hidden="true"] { display:none; }
   .modal-overlay { position:absolute; inset:0; background:rgba(2,6,12,0.6); backdrop-filter: blur(2px); }
   .modal-card { position:relative; width:min(720px,94%); max-height:86vh; overflow:auto; padding:18px; border-radius:12px; z-index:1201; background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.10)); border:1px solid rgba(255,255,255,0.12); box-shadow:0 20px 60px rgba(2,6,12,0.6); color: #ffffff; }
   .modal-card h3, .modal-card #modalBody { color: #ffffff !important; }
   .modal-card h3 { text-align:center; }
-  /* ocultar la X de la esquina (no visible) */
   .modal-close { display:none !important; }
   .session-action { background:var(--accent); color:white; border:none; padding:8px 12px; border-radius:8px; cursor:pointer; }
-  /* Botón secundario 'Cerrar' en rojo degradado y texto blanco */
   .modal-close-secondary {
     background: linear-gradient(180deg, rgba(220,60,60,0.95), rgba(190,40,40,0.95));
     color: #ffffff !important;
@@ -232,7 +226,6 @@
   .modal-table th, .modal-table td { padding:8px 10px; border-bottom:1px solid rgba(255,255,255,0.06); text-align:left; }
   .modal-table thead th { font-weight:700; }
   .modal-table tbody tr:nth-child(odd) { background: rgba(255,255,255,0.02); }
-  /* Weight modal uses same layout as session modal */
   #weightModal { position:fixed; inset:0; display:flex; align-items:center; justify-content:center; z-index:1200; }
   #weightModal[aria-hidden="true"]{ display:none; }
   #weightModal .modal-card { width:min(680px,94%); }
@@ -242,11 +235,14 @@
   <div class="wrap">
     <header >
       <div class="header-main">
-        <div><a class="event-badge" href="https://www.rockthesport.com/es/evento/-xxi-mtb-guzman-el-bueno-2026">21 MARZO 2026 — CÓRDOBA</a></div>
-        <h1><a href="https://www.mtbguzmanelbueno.com/">Guzmán el Bueno — Plan 24 semanas</a></h1>
+        <div><a class="event-badge" href="https://www.rockthesport.com/es/evento/-xxi-mtb-guzman-el-bueno-2026" target="_blank">21 MARZO 2026 — CÓRDOBA</a></div>
+        <h1><a href="https://www.mtbguzmanelbueno.com/" target="_blank">Guzmán el Bueno — Plan 24 semanas</a></h1>
         <div class="subtitle muted">Llega preparado para el maratón MTB — plan progresivo, control de peso y exportación</div>
       </div>
       <div class="controls">
+        <a class="github-link" href="https://github.com/chelemovil87" target="_blank" rel="noopener noreferrer" >
+          <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+        </a>
         <button id="resetPlan">Reiniciar plan</button>
         <button id="exportJSON">Exportar JSON</button>
         <button id="importJSON">Importar JSON</button>
@@ -287,7 +283,6 @@
     </footer>
   </div>
 
-  <!-- Modal para información de sesión -->
   <div id="sessionModal" aria-hidden="true">
     <div class="modal-overlay" id="modalOverlay"></div>
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
@@ -301,7 +296,6 @@
     </div>
   </div>
 
-  <!-- Modal para control de peso y progreso -->
   <div id="weightModal" aria-hidden="true">
     <div class="modal-overlay" id="weightModalOverlay"></div>
     <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="weightModalTitle">
@@ -330,7 +324,6 @@
   </div>
 
   <script>
-    // Descripciones por tipo de sesión (coincidir con títulos usados)
     const sessionDescriptions = {
       'Descanso activo': 'Recuperación activa: 45–60 min caminata o rodillo suave. Enfócate en movilidad y estiramientos.',
       'Rodillo/Carretera Z2': 'Entrenamiento aeróbico en zona 2. Mantén conversación y cadencia 85–95 rpm. Base de resistencia. (Duración típica 60–120 min)',
@@ -341,7 +334,59 @@
       'Fondo largo': 'Salida larga en Z2: prueba la nutrición, toma 60–90 g/h de hidratos y 500–750 ml/h de líquido. (Duración 2–4 h según objetivo)'
     };
 
-    // Detalles ricos (tablas u otros) para sesiones específicas
+    const phases = {
+      'Adaptación': {
+        'Descanso activo': 'Recuperación ligera: 45–60 min caminata o rodillo muy suave (Z1). Prioriza movilidad y estiramientos. Esta semana busca reactivar sin fatigar.',
+        'Rodillo/Carretera Z2': 'Trabajo aeróbico base: ritmo muy cómodo en Zona 2 (60–70% FCmáx). Mantén buena cadencia (85–95 rpm) y concentración en la técnica de pedaleo. Hidratación constante.',
+        'Gimnasio fuerza 45–60 min': 'Primera toma de contacto: movimientos básicos (sentadilla, zancadas, planchas) con poco peso. Enfócate en la técnica y la postura. 2–3 series por ejercicio para empezar.',
+        'Intervalos cortos': 'Introducción a la intensidad: 4–5×2 min en Z3–Z4 con recuperación completa. Objetivo: sensaciones, técnica de respiración y tolerancia al esfuerzo.',
+        'Cinta/Remo 30–45 min': 'Sesión alternativa suave. Objetivo: mejorar la base aeróbica sin impacto. Mantén ritmo cómodo y control de postura.',
+        'MTB técnica': 'Toma de contacto con la bici: trabaja equilibrio, trazadas amplias y control de freno. Evita picos de intensidad; prioriza la fluidez y la confianza.',
+        'Fondo largo': 'Salida relajada en Z2. Sin buscar esfuerzos intensos: acumular horas cómodas, practicar postura y revisar material.'
+      },
+      'Base': {
+        'Descanso activo': 'Rodillo o paseo muy suave (45–60 min). Movilidad y estiramientos. Recuperación activa para mantener la constancia.',
+        'Rodillo/Carretera Z2': 'Sesión aeróbica de volumen. Mantén la cadencia en 85–95 rpm y trabaja la economía de pedaleo. Hidratación y alimentación ligera si supera 90 min.',
+        'Gimnasio fuerza 45–60 min': 'Incremento moderado de cargas. Prioriza básicos: sentadilla, peso muerto, prensa y trabajo de core. 3×8–12 con técnica cuidada.',
+        'Intervalos cortos': 'Bloque de VO₂: 5–6×3 min en Z4 con 3 min recuperación. Buen calentamiento (15–20 min) y control en las series.',
+        'Cinta/Remo 30–45 min': 'Sesión cruzada moderada para mantener volumen y facilitar recuperación de piernas.',
+        'MTB técnica': 'Más foco en subidas y trazadas. Introduce secciones de pedaleo continuo y mejora de la tracción en subida.',
+        'Fondo largo': 'Rodaje largo con fragmentos de cadencia más alta. Practica alimentación (60–80 g/h) y bebida cada 15–20 min.'
+      },
+      'Fuerza/MTB': {
+        'Descanso activo': 'Rodillo o paseo de 45 min (Z1). Añade foam roller y estiramientos específicos si notas rigidez.',
+        'Rodillo/Carretera Z2': 'Sesión base con tramos en Z3: añade 2×15 min a ritmo sostenido para trabajar umbral.',
+        'Gimnasio fuerza 45–60 min': 'Fase de fuerza: menos repeticiones y más carga. Ejemplo: 4–6 reps, 3–5 series en ejercicios principales. Técnica y control postural obligatorios.',
+        'Intervalos cortos': 'Bloque intenso: 7–8×3 min en Z5 (o Z4 muy duro) con 2–3 min recuperación. Mejora potencia y tolerancia al lactato.',
+        'Cinta/Remo 30–45 min': 'Regeneración activa: ritmo cómodo para estimular circulación sin sobrecargar piernas.',
+        'MTB técnica': 'Objetivo: pasos técnicos exigentes, subidas con tracción y bajadas técnicas. Combina técnica y potencia en la bici.',
+        'Fondo largo': 'Rodaje largo con desnivel y tramos sostenidos; trabaja alimentación y gestión de ritmos en subidas prolongadas.'
+      },
+      'Específica': {
+        'Descanso activo': 'Descanso o 45 min muy suaves. Prioriza sueño, masaje/foam roller y nutrición para recuperación.',
+        'Rodillo/Carretera Z2': 'Sesión específica con tramos largos en Z3 (20–30 min) para aproximar ritmo de carrera.',
+        'Gimnasio fuerza 45–60 min': 'Mantenimiento (fuerza preventiva). Menor volumen, ejercicios de estabilidad y movilidad. 2 sesiones a la semana bastan.',
+        'Intervalos cortos': 'Ritmo de carrera: 4×6 min en Z4–Z5 con 4 min recuperación. Busca consistencia bajo fatiga.',
+        'Cinta/Remo 30–45 min': 'Sesión regenerativa ligera si es necesario. Mantén respiración y técnica.',
+        'MTB técnica': 'Simulación de carrera: ritmo sostenido, subidas largas y tramos técnicos. Practica nutrición y gestión de esfuerzos.',
+        'Fondo largo': 'Salida tipo maratón: terreno variado, ritmo controlado y alimentación idéntica a la que usarás el día del evento.'
+      },
+      'Puesta a punto': {
+        'Descanso activo': 'Semana ligera: rodillo muy suave o paseo corto. Prioriza descanso, sueño y carga de hidratos si toca.',
+        'Rodillo/Carretera Z2': 'Rodillo relajado con activaciones cortas: 3×2 min en Z4 para mantener chispa sin fatigar.',
+        'Gimnasio fuerza 45–60 min': 'Solo movilidad, core y estiramientos. Evita cargas pesadas y sesiones extenuantes.',
+        'Intervalos cortos': 'Activación breve: 3×3 min en Z3–Z4. Buen calentamiento y control del esfuerzo.',
+        'Cinta/Remo 30–45 min': 'Regeneración o descanso activo. Escucha al cuerpo.',
+        'MTB técnica': 'Rodaje suave con activaciones cortas; última revisión de técnica y ajuste de la bici.',
+        'Fondo largo': 'Salida corta y cómoda; no sobrecargar. Repite la estrategia de nutrición con porciones algo menores.'
+      }
+    };
+
+    function getSessionDescription(title, phase){
+      if(phases && phases[phase] && phases[phase][title]) return phases[phase][title];
+      return sessionDescriptions[title] || 'Descripción disponible.';
+    }
+
     const sessionDetails = {
       'Gimnasio fuerza 45–60 min': {
         type: 'table',
@@ -383,9 +428,6 @@
 
     const state = loadState() || {plan:defaultPlan,weights:[]};
 
-    // --- Migración de títulos antiguos guardados en localStorage ---
-    // Algunos usuarios pueden tener guardado un plan con títulos que incluían duraciones.
-    // Mapear esos títulos antiguos a los nuevos (sin tiempos) para que el UI refleje el cambio.
     const titleMap = {
       'Rodillo/Carretera Z2 60–120 min': 'Rodillo/Carretera Z2',
       'Intervalos cortos 45–60 min': 'Intervalos cortos',
@@ -445,13 +487,14 @@
     function openSessionModal(week, sessionObj, btnEl){
       currentSessionRef = { week, sessionObj, btnEl };
       modalTitle.textContent = sessionObj.title;
-      // Renderizar detalle enriquecido si existe
-      const detail = sessionDetails[sessionObj.title];
+  const detail = sessionDetails[sessionObj.title];
+      const desc = getSessionDescription(sessionObj.title, week.phase);
       if(detail && detail.type === 'table'){
-        let html = '<table class="modal-table"><thead><tr>' + detail.cols.map(c=>`<th>${c}</th>`).join('') + '</tr></thead><tbody>' + detail.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('') + '</tbody></table>';
+        let html = `<div style="margin-bottom:10px;color:#ffffff"><p>${desc}</p></div>`;
+        html += '<table class="modal-table"><thead><tr>' + detail.cols.map(c=>`<th>${c}</th>`).join('') + '</tr></thead><tbody>' + detail.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('') + '</tbody></table>';
         modalBody.innerHTML = html;
       } else {
-        modalBody.textContent = sessionDescriptions[sessionObj.title] || 'Descripción disponible.';
+        modalBody.innerHTML = `<div style="color:#ffffff"><p>${desc}</p></div>`;
       }
       modalToggleDone.textContent = sessionObj.done ? 'Desmarcar' : 'Marcar como hecho';
       modal.setAttribute('aria-hidden','false');
@@ -476,7 +519,6 @@
       closeModal();
     });
 
-    // Weight modal handlers
     const weightModal = document.getElementById('weightModal');
     const weightModalOverlay = document.getElementById('weightModalOverlay');
     const weightModalClose = document.getElementById('weightModalClose');
